@@ -1,0 +1,24 @@
+title: Biblioteca de Jogos
+authors:
+  - family-names: Dainesi
+    given-names: Wellington
+  - family-names: Olivan 
+    given-names: Mizael
+  - family-names: Bruno 
+    given-names: Guilherme 
+  - family-names: Vilela
+    given-names: Allan 
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Pontes
+    given-names: Diego
+keywords:
+  - Jogos
+  - Computador
+  - FPS
+  - Tiro
+  - Diversão
+  - Entretenimento 
+repository-code: https://github.com/ICEI-PUC-Minas-PPC-CC/puc-pocos-comp-laed-012026-os-pia-da-computaria
+version: 1.0.0
+date-released: 2026-05-12
