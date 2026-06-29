@@ -1,3 +1,8 @@
+//Alunos: Wellington Henrique de Melo Dainesi, Guilherme Bruno Franco Fernandes, Mizael Olivan Gualberto Ribeiro, Allan Giacon Vilella.
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -5,12 +10,13 @@
 
 struct jogos{
 
-    float tamanho;
     char nome[100] ;
     char genero[100];
     int ativo;
 
 };
+
+ // Estatísticas: Mostra todos os jogos ativos, inativos e cadastrados.
 
 void estatisticas (struct jogos lista_jogos [10], int total_jogos){
 
@@ -19,31 +25,34 @@ void estatisticas (struct jogos lista_jogos [10], int total_jogos){
     int j;
 
     if (total_jogos == 0) {
-    printf("Não existem jogos cadastrados, ativos ou inativos!");
-    }
+    printf("\nNão existem jogos cadastrados, ativos ou inativos!");
+      return;
 
+    }
 
     for (j = 0; j < total_jogos; j++){
 
-    if (lista_jogos[j].ativo == 1){
+       if (lista_jogos[j].ativo == 1){
             ativos++;
-    } else if (lista_jogos[j].ativo == 0) {
+       } else if (lista_jogos[j].ativo == 0) {
             inativos++;
     }
+
 }
 
-    printf("Jogos do gênero '%s':\n", lista_jogos[j].genero);
     printf("Total de jogos cadastrados: %d\n", total_jogos);
     printf("Total de jogos ativos: %d\n", ativos);
     printf("Total de jogos inativos: %d\n", inativos);
 
 }
 
+ //Excluir: "Excluir" um jogo específico. Ele é desativado no programa.
+
 void excluir (struct jogos lista_jogos [10], int total_jogos){
 
 int i;
 
-    printf("\nSelecione o jogo que deseja excluir: \n");
+    printf("\nSelecione o código do jogo que deseja excluir: \n");
     scanf ("%d", &i);
     getchar();
 
@@ -58,28 +67,35 @@ if (i >= 1 && i <= total_jogos){
     }
 }
 
+ //Listar: Lista todos os jogos cadastrados. Se houverem jogos cadastrados, ele exibe o nome, gênero e o Jogo (Que seria o índice dele no vetor).
+
  void listar(struct jogos lista_jogos [10], int total_jogos){
 
  int b;
 
         printf("\n\nListar os jogos\n\n\n");
         if (total_jogos == 0)
+
         {
         printf ("Nenhum jogo cadastrado.");
         }
-        else { for (b = 0; b < total_jogos; b++)
+
+        else {
+        for (b = 0; b < total_jogos; b++)
         {
+
         if (lista_jogos[b].ativo == 1) {
         printf("\nJogo: %d\n \nNome: %s\n \nGênero: %s\n", b+1, lista_jogos[b].nome, lista_jogos[b].genero);
-        }
-        }
+
+                 }
+             }
         }
  }
 
+  //Cadastrar: Cadastra o jogo desejado. Ele pede duas informações, nome e gênero.
  void cadastrar(struct jogos lista_jogos [10], int total_jogos){
 
      int valido = 0;
-     int c;
 
      do {
 
@@ -88,6 +104,7 @@ if (i >= 1 && i <= total_jogos){
          printf("\n\nInserir jogo\n\n\n");
          printf("Nome do Jogo:  ");
          fgets(lista_jogos[total_jogos].nome, 100, stdin);
+         lista_jogos[total_jogos].nome[strcspn(lista_jogos[total_jogos].nome, "\n")] = '\0';
 
          if (strlen(lista_jogos[total_jogos].nome) < 2){
          printf("\n\nO nome não pode ter menos que 2 caracteres.\n\n");
@@ -101,6 +118,7 @@ if (i >= 1 && i <= total_jogos){
 
          printf("Gênero do Jogo:  ");
          fgets(lista_jogos[total_jogos].genero, 100, stdin);
+         lista_jogos[total_jogos].genero[strcspn(lista_jogos[total_jogos].genero,"\n")] = '\0';
 
          if (strlen(lista_jogos[total_jogos].genero) < 2){
          printf("\\nnO gênero não pode ter menos que 2 caracteres.\n\n");
@@ -114,11 +132,15 @@ if (i >= 1 && i <= total_jogos){
          lista_jogos[total_jogos].ativo = 1;
 
  }
+  // Editar: Edita o jogo que já está cadastrado.
+
  void editar(struct jogos lista_jogos[10], int total_jogos){
-         int codigo;
-         printf("\n\n======= EDITAR JOGO =======\n\n");
-         if (total_jogos == 0){
-         printf("Nenhum jogo foi cadastrado.\n");
+
+     int codigo;
+
+        printf("\n\n======= EDITAR JOGO =======\n\n");
+        if (total_jogos == 0){
+        printf("Nenhum jogo foi cadastrado.\n");
         return;
      }
         printf("Digite o código do jogo que deseja editar: ");
@@ -134,17 +156,22 @@ if (i >= 1 && i <= total_jogos){
         printf("\nEsse jogo foi excluido e nao pode ser editado.\n");
         return;
     }
+
+    getchar();
     printf("\nEditando o jogo: %s\n", lista_jogos[codigo].nome);
 
     printf("Novo nome: ");
-    scanf(" %s", lista_jogos[codigo].nome);
+    fgets(lista_jogos[codigo].nome,100,stdin);
+    lista_jogos[codigo].nome[strcspn(lista_jogos[codigo].nome,"\n")] = '\0';
 
     printf("Novo genero: ");
-    scanf(" %s", lista_jogos[codigo].genero);
+    fgets(lista_jogos[codigo].genero,100,stdin);
+    lista_jogos[codigo].genero[strcspn(lista_jogos[codigo].genero,"\n")] = '\0';
 
     printf("\nJogo foi editado com sucesso.\n");
 }
 
+ //Pesquisar: Pesquisa o nome do jogo. Seja por, nome, gênero ou código.
  void pesquisar(struct jogos lista_jogos [10], int total_jogos){
 
      char texto_pesquisa[100];
@@ -166,13 +193,14 @@ if (i >= 1 && i <= total_jogos){
      printf("Opção: ");
      scanf("%d", &opcao_pesquisa);
 
-
      switch (opcao_pesquisa){
 
  case 1:
 
      printf("Digite o nome do jogo corretamente: ");
-     scanf(" %s", &texto_pesquisa);
+     getchar();
+     fgets(texto_pesquisa,100,stdin);
+     texto_pesquisa[strcspn(texto_pesquisa,"\n")] = '\0';
 
   for (a = 0; a < total_jogos; a++)
 
@@ -181,8 +209,11 @@ if (i >= 1 && i <= total_jogos){
      printf("\n\nJogo Encontrado!\n\n");
      printf("Código do Jogo: %d\nNome: %s\nGênero: %s\n", a + 1, lista_jogos[a].nome, lista_jogos[a].genero);
 
-     cadastrados = 1;
      }
+
+     if (cadastrados == 0)
+        printf("\nJogo não encontrado!");
+
   break;
 
  case 2:
@@ -203,7 +234,9 @@ if (i >= 1 && i <= total_jogos){
  case 3:
 
     printf("Digite o gênero do jogo corretamente: ");
-    scanf (" %s", texto_pesquisa);
+    getchar();
+    fgets(texto_pesquisa,100,stdin);
+    texto_pesquisa[strcspn(texto_pesquisa,"\n")] = '\0';
 
     printf("\nJogos do gênero '%s':\n\n", texto_pesquisa);
 
@@ -253,22 +286,20 @@ printf("Aperte 1 para inserir o jogo\n");
 printf("================================\n");
 printf("Aperte 2 para excluir o jogo\n");
 printf("================================\n");
-printf("Aperte 3 para favoritar o jogo\n");
+printf("Aperte 3 para listar os jogos\n");
 printf("================================\n");
-printf("Aperte 4 para listar os jogos\n");
+printf("Aperte 4 para pesquisar o jogo\n");
 printf("================================\n");
-printf("Aperte 5 para pesquisar o jogo\n\n");
-printf("--------------------------------\n");
-printf("Aperte 6 para editar o jogo\n\n");
-printf("--------------------------------\n");
-printf ("Aperte 7 para estatísticas gerais\n\n");
-printf("--------------------------------\n");
-printf("Aperte 0 para sair\n");
+printf("Aperte 5 para editar o jogo\n");
+printf("================================\n");
+printf ("Aperte 6 para estatísticas\n");
+printf("================================\n");
+printf("\nAperte 0 para sair\n");
 
 scanf(" %c", &opcao);
 getchar();
 
-
+// Switch opcção: Menu de decisão do usuário. Aqui ele escolhe a opção que ele quer.
 switch(opcao){
     case '1':
          if (total_jogos < 10)
@@ -287,27 +318,25 @@ switch(opcao){
          break;
     case '2':
         excluir (lista_jogos, total_jogos);
-        break;
+         break;
     case '3':
-        printf("\n\nFavoritar o jogo\n\n\n");
-        break;
-    case '4':
         listar(lista_jogos, total_jogos);
-        break;
-    case '5':
+         break;
+    case '4':
         pesquisar(lista_jogos, total_jogos);
-        break;
+         break;
+    case '5':
+        editar(lista_jogos, total_jogos);
+         break;
+    case '6':
+        estatisticas(lista_jogos, total_jogos);
+         break;
     case '0':
         printf("\n\nEncerrando...\n\n\n");
-        break;
-    case '6':
-        editar(lista_jogos, total_jogos);
-       break;
-    case '7':
-        estatisticas(lista_jogos, total_jogos);
-        break;
+         break;
     default:
         printf("\n\nTecla inválida\n\n\n");
+         break;
 }
  }while (opcao!='0');
 }
